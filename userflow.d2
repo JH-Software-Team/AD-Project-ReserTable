@@ -1,9 +1,16 @@
-# grid-columns: 3
+grid-columns: 3
 direction: right
-# horizontal-gap: 500
+horizontal-gap: 300
+
+__EMPTY1__: { 
+    style.opacity:0
+    width: 200
+ }
 
 User: {
+    near: center-left
     grid-rows:2
+    vertical-gap: 200
     style.font-size: 100
 
     웹 페이지 접속: {
@@ -16,6 +23,8 @@ User: {
 }
 
 Server: {
+    grid-rows: 3
+    vertical-gap: 300
     label.near: bottom-center
     style.font-size: 100
     #height: 500
@@ -33,38 +42,50 @@ Server: {
             style.font-size: 45
         }
         
+        식당 정보 전달: {
+            style.font-size: 45
+        }
+        
         데이터 베이스 요청: {
             style.font-size: 45
         }
         
-        식당 정보 전달: {
-            style.font-size: 45
-        }
-
         # __EMPTY1__.style.opacity: 0
     }
 
     유저 정보 관리: {
         style.font-size: 60
+        vertical-gap: 100
+        horizontal-gap:200
+        grid-columns: 3
+        grid-rows: 2
         
-        회원 정보 확인:{
-            style.font-size: 45
-        }
+        
         회원가입: {
             style.font-size: 45
         }
         로그인: {
             style.font-size: 45
         }
+        __EMPTY1__.style.opacity: 0
+        __EMPTY2__.style.opacity: 0
+        회원 정보 확인:{
+            style.font-size: 45
+        }
+        __EMPTY3__.style.opacity: 0
+
     }
 
     예약 처리: {
-        #grid-rows: 2
+        grid-columns: 3
+        horizontal-gap: 200
         style.font-size: 60
         
         예약 요청: {
             style.font-size: 45
         }
+        __EMPTY1__.style.opacity: 0
+
         예약 처리: {
             style.font-size: 45
         }
@@ -72,8 +93,13 @@ Server: {
     }
 }
 
+__EMPTY2__: { 
+    style.opacity:0
+    width: 100
+ }
+
 Restourant: {
-    
+    near: center-right
     style.font-size: 80
     height: 500
     width: 700
@@ -83,11 +109,11 @@ Restourant: {
     
 }
 
-Server.예약 처리.예약 요청 -> Server.유저 정보 관리.회원 정보 확인: 사용자 인증 및 결제 {
+Server.예약 처리.예약 요청 -> Server.유저 정보 관리.회원 정보 확인: 사용자 및 결제 인증 {
     style.font-size: 54
     style.stroke-width: 6
 }
-Server.유저 정보 관리.회원 정보 확인 -> Server.예약 처리.예약 처리: 인증 결과 전달{
+Server.유저 정보 관리.회원 정보 확인 -> Server.예약 처리.예약 처리: 결과 전달{
     style.font-size: 54
     style.stroke-width: 6
 }
