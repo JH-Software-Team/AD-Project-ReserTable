@@ -1,0 +1,280 @@
+explanation: |md
+# "ReserTable" Back-End Architecture             <br/>
+
+<br/>
+
+- Cloud Computing을 이용한 컴퓨팅 자원의 유연한 구성
+
+- Sever와 Database를 분리함으로써 안전성 확보
+
+- 서버 이원화를 통해 RTO 단축
+
+- 식당 정보 및 예약 정보와 유저 정보를 Database에 저장
+
+- 모든 기능을 Back-End에 API로 구현하여 확장성 및 사업성 강화
+
+- 외부 리소스의 정보를 Back-End를 통해 호출해 일관성 유지
+
+<br/>
+
+| {
+    near: center-left
+    style.font-size: 70
+}
+
+grid-rows: 3
+grid-columns: 2
+horizontal-gap: 500
+vertical-gap: 500
+
+DataBase: {
+    #near: top-center
+    grid-columns: 2
+    horizontal-gap: 500
+    style.font-size: 80
+    
+    유저 정보: {
+        style.font-size: 60
+        grid-rows: 2
+        grid-columns: 1
+        
+        이름, 전화번호 등의 개인정보: {
+            style.font-size: 45
+        }
+
+        앱 구독 여부: {
+            style.font-size: 45
+        }
+    }
+
+    식당정보: {
+        style.font-size: 60
+        grid-rows: 3
+        grid-columns: 1
+        
+        식당 메뉴:{
+            style.font-size: 45
+        }
+
+        주소 등의 기타 정보: {
+            style.font-size: 45
+        }
+
+        예약자 정보: {
+            style.font-size: 45
+        }
+    }
+}
+
+#__EMPTY9__: {style.opacity:0}
+__EMPTY10__: {style.opacity:0}
+
+Back Server: {
+    label.near: top-center
+    style.font-size: 100
+    grid-rows: 2
+    grid-columns: 3
+    horizontal-gap: 54
+    vertical-gap: 54
+    
+    식당 정보: {
+        style.font-size: 60
+        grid-rows: 2
+        grid-columns: 3
+        
+        식당 정보 요청: {
+            style.font-size: 45
+        }
+        
+        데이터 베이스 요청: {
+            style.font-size: 45
+        }
+        
+        식당 정보 전달: {
+            style.font-size: 45
+        }
+
+        __EMPTY1__.style.opacity: 0
+    }
+
+    예약 처리: {
+        style.font-size: 60
+        
+        예약 요청: {
+            style.font-size: 45
+        }
+        예약 처리: {
+            style.font-size: 45
+        }
+        결제 결과 전달: {
+            style.font-size: 45
+        }
+
+    }
+
+    예약자 명단: {
+        style.font-size: 60
+        grid-rows: 4
+
+        예약자 명단 요청: {
+            style.font-size: 45
+        }
+
+        __EMPTY1__.style.opacity: 0
+        __EMPTY2__.style.opacity: 0
+
+        예약자 명단 전달: {
+            style.font-size: 45
+        }
+    }
+
+    # __EMPTY5__.style.opacity: 0
+
+    유저 정보 관리: {
+        style.font-size: 60
+        
+        회원가입: {
+            style.font-size: 45
+        }
+        로그인: {
+            style.font-size: 45
+        }
+        회원 정보 확인:{
+            style.font-size: 45
+        }
+    }
+    
+}
+
+식당: {
+    style.font-size: 80
+    grid-rows: 3
+    grid-columns: 2
+    horizontal-gap: 150
+    
+    좌석 수:{
+        style.font-size: 60
+    }
+
+    좌석 위치:{
+        style.font-size: 60
+    }
+
+    예약 좌석 위치:{
+        style.font-size: 60
+    }
+
+    좌석 예약 시간:{
+        style.font-size: 60
+    }
+
+    웨이팅 시간:{
+        style.font-size: 60
+    }
+}
+
+__EMPTY8__:{style.opacity:0}
+
+외부 리소스: {
+    style.font-size: 80
+    near: bottom-center
+    
+    캐치테이블: {
+        #near: center-left
+        style.font-size: 60
+        height: 300
+    }
+    
+    테이블링: {
+        #near: center
+        style.font-size: 60
+        height: 300
+    }   
+    
+    결제 대행사: {
+        #near: center-right
+        style.font-size: 60
+        height: 300
+    } 
+}
+
+# 인증 플로우
+    Back Server.예약 처리.예약 요청 -> Back Server.유저 정보 관리.회원 정보 확인{
+    style.font-size: 54
+    style.stroke-width: 6
+}
+    Back Server.유저 정보 관리.회원 정보 확인 -> Back Server.예약 처리.예약 처리{
+    style.font-size: 54
+    style.stroke-width: 6
+}
+
+    Back Server.식당 정보.식당 정보 요청 -> Back Server.유저 정보 관리.회원 정보 확인{
+    style.font-size: 54
+    style.stroke-width: 6
+}
+    Back Server.유저 정보 관리.회원 정보 확인 -> Back Server.식당 정보.데이터 베이스 요청{
+    style.font-size: 54
+    style.stroke-width: 6
+}
+
+# 예약 플로우
+Back Server.예약 처리.예약 처리 -> 외부 리소스.결제 대행사: 결제 API 요청 {
+    style.font-size: 54
+    style.stroke-width: 6
+}
+
+외부 리소스.결제 대행사 -> Back Server.예약 처리.결제 결과 전달 {
+    style.font-size: 54
+    style.stroke-width: 6
+}
+
+Back Server.예약 처리.결제 결과 전달 -> DataBase.식당정보.예약자 정보 {
+    #style.font-size: 54
+    style.stroke-width: 6
+}
+
+Back Server.예약 처리.결제 결과 전달 -> 식당: {
+    style.font-size: 54
+    style.stroke-width: 6
+}
+
+#식당 정보 요청 플로우
+Back Server.식당 정보.데이터 베이스 요청 -> DataBase.식당정보: 데이터 요청 {
+    style.font-size: 54
+    style.stroke-width: 6
+}
+
+DataBase.식당정보 -> Back Server.식당 정보.식당 정보 전달: 데이터 전달 {
+    style.font-size: 54
+    style.stroke-width: 6
+}
+Back Server.식당 정보.데이터 베이스 요청 -> 외부 리소스.캐치테이블: {
+    style.font-size: 54
+    style.stroke-width: 6
+}
+Back Server.식당 정보.데이터 베이스 요청 -> 외부 리소스.테이블링: {
+    style.font-size: 54
+    style.stroke-width: 6
+}
+
+
+# 식당 예약자 명단 확인 플로우
+식당 -> Back Server.예약자 명단.예약자 명단 요청 {
+    style.font-size: 54
+    style.stroke-width: 6
+}
+
+Back Server.예약자 명단.예약자 명단 요청 -> DataBase.식당정보.예약자 정보: 예약성공 명단 전달 {
+    style.font-size: 54
+    style.stroke-width: 6
+}
+
+DataBase.식당정보.예약자 정보 -> Back Server.예약자 명단.예약자 명단 전달: 정보 요청 {
+    style.font-size: 54
+    style.stroke-width: 6
+}
+
+Back Server.예약자 명단.예약자 명단 전달 -> 식당 {
+    style.font-size: 54
+    style.stroke-width: 6
+}
